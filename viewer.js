@@ -1,5 +1,5 @@
 const modelParts = {"bunni": ["bunni.glb.part1", "bunni.glb.part2", "bunni.glb.part3"], "ember": ["ember.glb.part1", "ember.glb.part2", "ember.glb.part3"], "otti": ["otti.glb.part1", "otti.glb.part2"]};
-import {ExitMotion} from './exit-motion.js?v=35';
+import {ExitMotion} from './exit-motion.js?v=36c';
 import {LifeMotion} from './life-motion.js';
 import * as THREE from 'three';
 import {OrbitControls} from './OrbitControls.js';
