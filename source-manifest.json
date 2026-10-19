@@ -1,0 +1,26 @@
+{
+  "bunni": {
+    "parts": [
+      "bunni-source.zip.part1",
+      "bunni-source.zip.part2",
+      "bunni-source.zip.part3",
+      "bunni-source.zip.part4"
+    ],
+    "sha256": "8c1701fece09c3268cafd87ab64628b49de27180798c78ddfdd6e49a0d44f0d6"
+  },
+  "ember": {
+    "parts": [
+      "ember-source.zip.part1",
+      "ember-source.zip.part2",
+      "ember-source.zip.part3"
+    ],
+    "sha256": "c01ca24407dd2452e3da7fc06eb9dbbb1a8fa51f838eb183764c747c62c44455"
+  },
+  "otti": {
+    "parts": [
+      "otti-source.zip.part1",
+      "otti-source.zip.part2"
+    ],
+    "sha256": "49c4cc39047b4bb9f55885eda638fb799d2128b0e81cff2a80fae84f20acfefc"
+  }
+}
