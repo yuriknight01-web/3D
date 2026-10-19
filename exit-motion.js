@@ -1,11 +1,11 @@
 // Dissolve is a renderer effect; skeletal pose and closed eyes are baked in Defeat.
 export class ExitMotion {
  constructor(model,pet){
-  this.uniform={value:0};this.mouth={value:0};this.pet=pet;this.model=model;this.materials=[];
+  this.uniform={value:0};this.mouth={value:0};this.blink={value:0};this.pet=pet;this.model=model;this.materials=[];
   model.traverse(o=>{if(!o.isMesh)return;const list=Array.isArray(o.material)?o.material:[o.material];const copies=list.map(m=>{
    const c=m.clone();c.onBeforeCompile=shader=>{
-    shader.uniforms.exitProgress=this.uniform;shader.uniforms.defeatMouth=this.mouth;
-    shader.vertexShader='uniform float defeatMouth;\nvarying vec3 exitPosition;\n'+shader.vertexShader;
+    shader.uniforms.exitProgress=this.uniform;shader.uniforms.defeatMouth=this.mouth;shader.uniforms.naturalBlink=this.blink;
+    shader.vertexShader='uniform float naturalBlink;\nuniform float defeatMouth;\nvarying vec3 exitPosition;\n'+shader.vertexShader;
     shader.vertexShader=shader.vertexShader.replace('#include <begin_vertex>','#include <begin_vertex>\nexitPosition=position;');
     shader.fragmentShader='uniform float exitProgress;\nuniform float defeatMouth;\nvarying vec3 exitPosition;\n'+shader.fragmentShader;
     if(this.pet==='ember' && m.name!=='Closed eyelid'){
@@ -19,6 +19,11 @@ export class ExitMotion {
      `;
      shader.vertexShader=muzzleFunctions+shader.vertexShader;
      shader.fragmentShader=muzzleFunctions+shader.fragmentShader;
+     shader.vertexShader=shader.vertexShader.replace('#include <morphnormal_vertex>', `#include <morphnormal_vertex>
+      float cheekMask=(1.0-smoothstep(.08,.155,abs(position.x)))*smoothstep(.62,.72,position.z)
+       *smoothstep(-.01,.02,position.y)*(1.0-smoothstep(.16,.23,position.y));
+      objectNormal=normalize(mix(objectNormal,normal,naturalBlink*cheekMask));
+     `);
      shader.vertexShader=shader.vertexShader.replace('#include <beginnormal_vertex>', `#include <beginnormal_vertex>
       float mouthBlend=defeatMouth*muzzleMask(position);
       vec3 smoothMuzzleNormal=normalize(vec3(.007216+9.353228*position.x+.016473*position.y,
@@ -54,7 +59,7 @@ export class ExitMotion {
        float edge=1.0-smoothstep(0.0,.05,field-exitProgress);
        gl_FragColor.rgb=mix(gl_FragColor.rgb,vec3(.85,1.0,.86),edge*.8);
       }`);
-   };c.customProgramCacheKey=()=> 'pet-exit-mouth-v36c-'+pet;this.materials.push(c);return c;
+   };c.customProgramCacheKey=()=> 'pet-exit-cheek-v38-'+pet;this.materials.push(c);return c;
   });o.material=Array.isArray(o.material)?copies:copies[0];});
  }
  update(clip,phase){const f=clip==='Defeat'?Math.max(0,Math.min(1,(phase-.03)/.32)):0;this.mouth.value=f*f*(3-2*f);const u=clip==='Defeat'?Math.max(0,Math.min(1,(phase-.70)/.27)):0;this.uniform.value=u*u*(3-2*u);this.model.visible=this.uniform.value<1;return this.uniform.value;}
