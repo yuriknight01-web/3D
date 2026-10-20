@@ -1,26 +1,29 @@
 {
   "bunni": {
     "parts": [
-      "bunni-source.zip.part1",
-      "bunni-source.zip.part2",
-      "bunni-source.zip.part3",
-      "bunni-source.zip.part4"
+      "bunni-v40-source.zip.part1",
+      "bunni-v40-source.zip.part2",
+      "bunni-v40-source.zip.part3",
+      "bunni-v40-source.zip.part4",
+      "bunni-v40-source.zip.part5"
     ],
-    "sha256": "8c1701fece09c3268cafd87ab64628b49de27180798c78ddfdd6e49a0d44f0d6"
+    "sha256": "05831390adcc46ac722723ab17c97549920c208dbcff5b4cadd7d83cbbe885f5"
   },
   "ember": {
     "parts": [
-      "ember-v39-source.zip.part1",
-      "ember-v39-source.zip.part2",
-      "ember-v39-source.zip.part3"
+      "ember-v40-source.zip.part1",
+      "ember-v40-source.zip.part2",
+      "ember-v40-source.zip.part3",
+      "ember-v40-source.zip.part4"
     ],
-    "sha256": "5e5231f0841dd436d21c4d76da196999c04f7720982c2635ee197bf0d5222a4b"
+    "sha256": "dbdee54866cedd46d6928c43521432469a076eca70e1c2111b555aa01f56dcd2"
   },
   "otti": {
     "parts": [
-      "otti-source.zip.part1",
-      "otti-source.zip.part2"
+      "otti-v40-source.zip.part1",
+      "otti-v40-source.zip.part2",
+      "otti-v40-source.zip.part3"
     ],
-    "sha256": "49c4cc39047b4bb9f55885eda638fb799d2128b0e81cff2a80fae84f20acfefc"
+    "sha256": "37932a7250ab9444adb26fb872546b76a34fc5f02f7f67f9fa5e4045e1422ff2"
   }
 }

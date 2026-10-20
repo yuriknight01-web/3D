@@ -1,0 +1,29 @@
+{
+  "version": 40,
+  "policy": "Preserve approved character colors and deliberate highlights. Clean semantic material regions, not global desaturation. Lighting may change visible brightness.",
+  "ember": {
+    "coat": "orange/red-orange",
+    "crest_and_tail_tips": "warm yellow",
+    "muzzle_chest_paws": "warm cream",
+    "inner_ears_cheeks_paw_pads": "soft pink",
+    "eyes": "amber/red-orange, dark pupils, white highlights",
+    "nose_mouth": "dark brown",
+    "collar": "dark brown leather",
+    "studs_star_leaf_ornaments": "gold/yellow"
+  },
+  "bunni": {
+    "fur": "warm cream",
+    "inner_ears_cheeks_nose": "soft pink",
+    "eyes": "amber, dark pupils and outlines, white highlights",
+    "leaf_bow": "leaf green",
+    "feet_tail": "warm cream"
+  },
+  "otti": {
+    "coat_arms_feet_tail": "blue",
+    "inner_ears": "deep blue",
+    "face_belly": "warm cream",
+    "cheeks": "soft pink",
+    "eyes_nose_mouth_whiskers": "dark brown/black, white eye highlights",
+    "scarf": "cyan blue"
+  }
+}
