@@ -7,7 +7,7 @@ export class ExitMotion {
     shader.uniforms.exitProgress=this.uniform;shader.uniforms.defeatMouth=this.mouth;shader.uniforms.naturalBlink=this.blink;
     shader.vertexShader='uniform float naturalBlink;\nuniform float defeatMouth;\nvarying vec3 exitPosition;\n'+shader.vertexShader;
     shader.vertexShader=shader.vertexShader.replace('#include <begin_vertex>','#include <begin_vertex>\nexitPosition=position;');
-    shader.fragmentShader='uniform float exitProgress;\nuniform float defeatMouth;\nvarying vec3 exitPosition;\n'+shader.fragmentShader;
+    shader.fragmentShader='uniform float naturalBlink;\nuniform float exitProgress;\nuniform float defeatMouth;\nvarying vec3 exitPosition;\n'+shader.fragmentShader;
     if(this.pet==='ember' && m.name!=='Closed eyelid'){
      const muzzleFunctions=`
       float muzzleMask(vec3 p){
@@ -19,11 +19,6 @@ export class ExitMotion {
      `;
      shader.vertexShader=muzzleFunctions+shader.vertexShader;
      shader.fragmentShader=muzzleFunctions+shader.fragmentShader;
-     shader.vertexShader=shader.vertexShader.replace('#include <morphnormal_vertex>', `#include <morphnormal_vertex>
-      float cheekMask=(1.0-smoothstep(.08,.155,abs(position.x)))*smoothstep(.62,.72,position.z)
-       *smoothstep(-.01,.02,position.y)*(1.0-smoothstep(.16,.23,position.y));
-      objectNormal=normalize(mix(objectNormal,normal,naturalBlink*cheekMask));
-     `);
      shader.vertexShader=shader.vertexShader.replace('#include <beginnormal_vertex>', `#include <beginnormal_vertex>
       float mouthBlend=defeatMouth*muzzleMask(position);
       vec3 smoothMuzzleNormal=normalize(vec3(.007216+9.353228*position.x+.016473*position.y,
@@ -35,6 +30,17 @@ export class ExitMotion {
      `);
 
      shader.fragmentShader=shader.fragmentShader.replace('#include <map_fragment>', `#include <map_fragment>
+      // Eyelids close over the unchanged rounded face, without compressing cheeks.
+      float ex=(abs(exitPosition.x)-.176)/.112;
+      float ez=(exitPosition.y-.208)/.123;
+      float eyeRegion=(1.0-smoothstep(1.10,1.25,length(vec2(ex,ez))))*smoothstep(.34,.50,exitPosition.z);
+      float eyeSeam=.196+.018*min(1.0,ex*ex);
+      float aperture=.15*(1.0-naturalBlink);
+      float cover=smoothstep(aperture-.006,aperture+.006,abs(exitPosition.y-eyeSeam))*smoothstep(0.0,.06,naturalBlink);
+      if(naturalBlink>.999)cover=1.0;
+      diffuseColor.rgb=mix(diffuseColor.rgb,vec3(.94,.925,.89),eyeRegion*cover);
+      float eyelidLine=(1.0-smoothstep(.0015,.0035,abs(exitPosition.y-eyeSeam)))*(1.0-smoothstep(.78,.90,abs(ex)))*smoothstep(.90,1.0,naturalBlink)*eyeRegion;
+      diffuseColor.rgb=mix(diffuseColor.rgb,vec3(.035,.018,.012),eyelidLine);
       // Object-space material expression. Preserve the authored mesh and UVs.
       float mx=abs(exitPosition.x), my=exitPosition.y;
       float mouthArea=muzzleMask(exitPosition);
@@ -47,7 +53,7 @@ export class ExitMotion {
       diffuseColor.rgb=mix(diffuseColor.rgb,vec3(.045,.030,.022),stroke*defeatMouth);
      `);
      shader.fragmentShader=shader.fragmentShader.replace('#include <normal_fragment_maps>', `#include <normal_fragment_maps>
-      normal=normalize(mix(normal,nonPerturbedNormal,defeatMouth*mouthArea));
+      normal=normalize(mix(normal,nonPerturbedNormal,max(defeatMouth*mouthArea,eyeRegion*cover)));
      `);
     }
     shader.fragmentShader=shader.fragmentShader.replace('#include <dithering_fragment>',`#include <dithering_fragment>
@@ -59,7 +65,7 @@ export class ExitMotion {
        float edge=1.0-smoothstep(0.0,.05,field-exitProgress);
        gl_FragColor.rgb=mix(gl_FragColor.rgb,vec3(.85,1.0,.86),edge*.8);
       }`);
-   };c.customProgramCacheKey=()=> 'pet-exit-cheek-v38-'+pet;this.materials.push(c);return c;
+   };c.customProgramCacheKey=()=> 'pet-exit-surface-v39-'+pet;this.materials.push(c);return c;
   });o.material=Array.isArray(o.material)?copies:copies[0];});
  }
  update(clip,phase){const f=clip==='Defeat'?Math.max(0,Math.min(1,(phase-.03)/.32)):0;this.mouth.value=f*f*(3-2*f);const u=clip==='Defeat'?Math.max(0,Math.min(1,(phase-.70)/.27)):0;this.uniform.value=u*u*(3-2*u);this.model.visible=this.uniform.value<1;return this.uniform.value;}

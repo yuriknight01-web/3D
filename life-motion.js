@@ -15,7 +15,7 @@ export class LifeMotion {
   if(!blink||clip==='Rest')close=0;
   if(clip==='Defeat'){const u=Math.max(0,Math.min(1,this.pet==='ember'?(phase-.03)/.32:this.pet==='otti'?(phase-.04)/.26:(phase-.03)/.32));close=u*u*(3-2*u);}
   close=Math.max(close,manual);
-  for(const m of this.meshes)m.morphTargetInfluences[m.morphTargetDictionary.Blink]=close;
+  for(const m of this.meshes){m.morphTargetInfluences[m.morphTargetDictionary.Blink]=close;if(this.pet==='ember'&&m.material?.name==='Closed eyelid')m.visible=false;}
   for(const t of this.tails){
    t.base.copy(t.bone.quaternion);
    if(!tail||clip==='Rest'||clip==='Defeat')continue;

@@ -10,11 +10,11 @@
   },
   "ember": {
     "parts": [
-      "ember-v37-source.zip.part1",
-      "ember-v37-source.zip.part2",
-      "ember-v37-source.zip.part3"
+      "ember-v39-source.zip.part1",
+      "ember-v39-source.zip.part2",
+      "ember-v39-source.zip.part3"
     ],
-    "sha256": "dade809b928a97a353175a3bc669f4734f82fdac52aa2a0a9228f21718971b51"
+    "sha256": "5e5231f0841dd436d21c4d76da196999c04f7720982c2635ee197bf0d5222a4b"
   },
   "otti": {
     "parts": [

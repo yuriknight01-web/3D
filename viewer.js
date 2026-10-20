@@ -1,6 +1,6 @@
-const modelParts = {"bunni": ["bunni.glb.part1", "bunni.glb.part2", "bunni.glb.part3"], "ember": ["ember-v37.glb.part1", "ember-v37.glb.part2", "ember-v37.glb.part3"], "otti": ["otti.glb.part1", "otti.glb.part2"]};
-import {ExitMotion} from './exit-motion.js?v=38';
-import {LifeMotion} from './life-motion.js';
+const modelParts = {"bunni": ["bunni.glb.part1", "bunni.glb.part2", "bunni.glb.part3"], "ember": ["ember-v39.glb.part1", "ember-v39.glb.part2", "ember-v39.glb.part3"], "otti": ["otti.glb.part1", "otti.glb.part2"]};
+import {ExitMotion} from './exit-motion.js?v=39';
+import {LifeMotion} from './life-motion.js?v=39';
 import * as THREE from 'three';
 import {OrbitControls} from './OrbitControls.js';
 import {GLTFLoader} from './GLTFLoader.js';
